@@ -30,6 +30,8 @@ public class UserController {
 	   @ApiOperation(value = "사용자 정보 가져오기")
 	   @GetMapping(value = "/user")
 	   public ResponseEntity<User> getUser() {
+		   
+		   
 		   User user = new User();
 		   return new ResponseEntity<User>(user,HttpStatus.OK);
 	   }

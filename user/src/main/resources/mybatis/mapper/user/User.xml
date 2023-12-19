@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pocketmoney.user.dao.UserDao">
+	<select id="selectUser" resultType="com.pocketmoney.user.model.User">
+			select
+				id,
+                name,
+                balance,
+                level,
+                prefer_interest_rate,
+                family_id
+			from user
+			where id = #{id}
+	</select>
+    <select id="selecAlltUsers" resultType="com.pocketmoney.user.model.User">
+			select
+				id,
+                name,
+                balance,
+                level,
+                prefer_interest_rate,
+                family_id
+			from user
+	</select>
+    <select id="selectPIR" resultType="double">
+			select
+                prefer_interest_rate
+			from user
+			where id = #{id}
+	</select>
+    <select id="selectFR" resultType="double">
+			select
+                f.family_rate
+			from user u, family f
+			where u.id = #{id} and u.family_id = f.family_id;
+	</select>
+    <!-- <select id="selectFamily" parameterType="int" resultType="com.pocketmoney.user.model.Family">
+        select *
+        from family
+    </select> -->
+    
+	<update id="updateBalance" parameterType="com.pocketmoney.user.model.BalanceParam">
+        update user set balance=balance-#{price}
+        where id=#{id1}
+        update user set balance=balance+#{price}
+        where id=#{id2}
+    </update>
+</mapper>

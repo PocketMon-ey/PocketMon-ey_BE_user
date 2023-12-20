@@ -7,32 +7,32 @@
                 name,
                 balance,
                 level,
-                prefer_interest_rate,
-                family_id
+                preferInterestRate,
+                familyId
 			from userDB.User
 			where id = #{id}
 	</select>
-    <select id="selecAlltUsers" resultType="com.pocketmoney.user.model.User">
+    <select id="selecAllUsers" resultType="com.pocketmoney.user.model.User">
 			select
 				id,
                 name,
                 balance,
                 level,
-                prefer_interest_rate,
-                family_id
+                preferInterestRate,
+                familyId
 			from userDB.User
 	</select>
     <select id="selectPIR" resultType="double">
 			select
-                prefer_interest_rate
-			from user
+                preferInterestRate
+			from userDB.User
 			where id = #{id}
 	</select>
     <select id="selectFR" resultType="double">
 			select
-                f.family_rate
+                f.familyRate
 			from userDB.User u, userDB.Family f
-			where u.id = #{id} and u.family_id = f.family_id;
+			where u.id = #{id} and u.familyId = f.familyId;
 	</select>
     <!-- <select id="selectFamily" parameterType="int" resultType="com.pocketmoney.user.model.Family">
         select *
@@ -40,9 +40,7 @@
     </select> -->
     
 	<update id="updateBalance" parameterType="com.pocketmoney.user.model.BalanceParam">
-        update user set balance=balance-#{price}
+        update userDB.User set balance=balance-#{price}
         where id=#{id1}
-        update userDB.User set balance=balance+#{price}
-        where id=#{id2}
     </update>
 </mapper>

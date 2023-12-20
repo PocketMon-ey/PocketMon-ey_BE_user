@@ -5,43 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.pocketmoney.user.dao.UserDao;
+import com.pocketmoney.user.Service.UserService;
 import com.pocketmoney.user.model.BalanceParam;
 import com.pocketmoney.user.model.User;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-
-@Controller
+@RestController
+@RequestMapping("/user")
+@Api(tags = "User")
 public class UserController {
+
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 
 	@ApiOperation(value = "전체 사용자 조회")
-	@GetMapping(value = "/user")
-	public ResponseEntity<List<User>> getAllUsers() {
+	@GetMapping()
+	public ResponseEntity<List<User>> getAllUsers() throws Exception {
 		List<User> users;
-		try {
-			users = userDao.selecAllUsers();
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		users = userService.selecAllUsers();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "사용자 조회")
-	@GetMapping(value = "/user/{id}")
+	@GetMapping(value = "{id}")
 	public ResponseEntity<User> getUserById(@PathVariable int id) {
 
 		User user = null;
 		try {
-			user = userDao.selectUser(id);
+			user = userService.selectUser(id);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -50,12 +50,12 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "우대금리 조회")
-	@GetMapping(value = "/user/PIR/{id}")
+	@GetMapping(value = "/PIR/{id}")
 	public ResponseEntity<Double> getPIR(@PathVariable int id) {
 
 		double pir;
 		try {
-			pir = userDao.selectPIR(id);
+			pir = userService.selectPIR(id);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -64,12 +64,12 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "가족금리 조회")
-	@GetMapping(value = "/user/FR/{id}")
+	@GetMapping(value = "/FR/{id}")
 	public ResponseEntity<Double> getFR(@PathVariable int id) {
 
 		double fr;
 		try {
-			fr = userDao.selectFR(id);
+			fr = userService.selectFR(id);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -78,17 +78,14 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "계좌이체")
-	@PostMapping(value = "user/transaction")
-	public ResponseEntity<Integer> setTransaction(@RequestBody BalanceParam param) {
-		try {
-			userDao.updateBalance(param);
-		} catch (Exception e) {
+	@PostMapping(value = "/transaction")
+	public ResponseEntity<Integer> setTransaction(@RequestBody BalanceParam param) throws Exception {
+		int res = userService.updateBalance(param);
+		if (res == 0) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-
 
 	// @ApiOperation(value = "사용자 등록")
 	// @PostMapping(value="/users")

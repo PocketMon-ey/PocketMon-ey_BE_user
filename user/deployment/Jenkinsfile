@@ -17,16 +17,16 @@ podTemplate(
 		containerTemplate(name: 'podman', image: 'mgoltzsche/podman', ttyEnabled: true, command: 'cat', privileged: true)
 	],
 	//volume mount
-	volumes: [
-		hostPathVolume(hostPath: "/etc/containers/registries.conf", mountPath: "/etc/containers/registries.conf"), 
-		hostPathVolume(hostPath: "/etc/containers/registries.conf.d/myharbor.conf", mountPath: "/etc/containers/registries.conf.d/myharbor.conf")
-	]
+    volumes: [
+    	nfsVolume( mountPath: '/root/.m2', serverAddress: '10.193.24.247', serverPath: '/data/maven', readOnly: false ),
+    ]
 ) 
+
 {
 	node(label) {
 		stage("Get Source") {
-			git branch: 'main', url: 'https://github.com/PocketMon-ey/PocketMon-ey_BE_user/'
-        	} 
+			git branch: 'main', url: 'https://github.com/PocketMon-ey/PocketMon-ey_BE_user/.git'
+        } 
 
 		//-- Read pipeline.properties and setting variables
 		def props = readProperties  file:"user/deployment/pipeline.properties"
@@ -58,14 +58,14 @@ podTemplate(
 						)]) {
 						    sh 'echo user "$USER" pasword "$PASSWORD"'
 						    sh "podman login ${registry} --username ${USER} --password ${PASSWORD}"
-							sh "podman build -f user/deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg ARTIFACTORY_FILE=${repository}.jar user"
+							sh "podman build -f ./user/deployment/Dockerfile -t ${registry}/${organization}/${repository}:${tag} --build-arg ARTIFACTORY_FILE=${repository}.jar user"
 							sh "sleep 2"
 							sh "podman push ${registry}/${organization}/${repository}:${tag}"
 							sh "podman tag ${registry}/${organization}/${repository}:${tag} ${registry}/${organization}/${repository}:latest"
 							sh "podman push ${registry}/${organization}/${repository}:latest"
-						}
 					}
 				}
+			}
 
 			stage("Scan Image Vulnerability") {
 				container("trivy"){
@@ -90,7 +90,7 @@ podTemplate(
 				}
 			}
 
-	        	notifySlack("${currentBuild.currentResult}", "#00FF00")
+	        notifySlack("${currentBuild.currentResult}", "#00FF00")
 			echo "**** FINISH ALL STAGES : SUCCESS"
 		
 		} catch(e) {

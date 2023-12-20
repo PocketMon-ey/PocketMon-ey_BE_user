@@ -84,7 +84,7 @@ spec:
     - host: pocketmoney.165.192.105.60.nip.io
       http:
         paths:
-          - path: /user
+          - path: /(.*)
             pathType: Prefix
             backend:
               service:

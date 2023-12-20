@@ -41,6 +41,14 @@
     
 	<update id="updateBalance" parameterType="com.pocketmoney.user.model.BalanceParam">
         update userDB.User set balance=balance-#{price}
-        where id=#{id1}
+        where id=#{id1};
+    </update>
+    <update id = "updatePIR" parameterType="com.pocketmoney.user.model.interestRateParam">
+        update userDB.User set preferInterestRate = #{preferInterestRate}
+        where id=(select firstChildId from userDB.Family where carerId = #{id});
+    </update>
+    <update id = "updateFR" parameterType="com.pocketmoney.user.model.interestRateParam">
+        update userDB.User set familyRate = #{familyRate}
+        where id=(select firstChildId from userDB.Family where carerId = #{id});
     </update>
 </mapper>

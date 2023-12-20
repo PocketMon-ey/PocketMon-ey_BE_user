@@ -1,10 +1,14 @@
 package com.pocketmoney.user.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class User {
-	String name = "시";
+	private int id;
+	private String name;
+	private String account;
+	private int balance;
+	private int level;
+	private double preferInterestRate;
+	private int familyId;
 }

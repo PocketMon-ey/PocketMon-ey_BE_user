@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.pocketmoney.user.model.BalanceParam;
-import com.pocketmoney.user.model.User;
+import com.pocketmoney.user.model.*;
 
 @Service
 public interface UserService {
@@ -18,4 +17,6 @@ public interface UserService {
     // int selectCarer(int familyId) throws Exception;
     // List<Integer> selectChildren(int familyId) throws Exception;
     int updateBalance(BalanceParam balanceParam) throws Exception;
+    int updatePIR(InterestRateParam interestRateParam) throws Exception;
+    int updateFR(InterestRateParam interestRateParam) throws Exception;
 }

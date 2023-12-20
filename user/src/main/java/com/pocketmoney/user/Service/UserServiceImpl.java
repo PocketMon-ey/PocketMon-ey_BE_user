@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pocketmoney.user.dao.UserDao;
 import com.pocketmoney.user.model.BalanceParam;
+import com.pocketmoney.user.model.InterestRateParam;
 import com.pocketmoney.user.model.User;
 
 @Service
@@ -45,5 +46,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Double selectFR(int id) throws Exception {
         return userDao.selectFR(id);
+    }
+
+    @Override
+    public int updatePIR(InterestRateParam interestRateParam) throws Exception {
+        return userDao.updatePIR(interestRateParam);
+    }
+
+    @Override
+    public int updateFR(InterestRateParam interestRateParam) throws Exception {
+        return userDao.updateFR(interestRateParam);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pocketmoney.user.Service.UserService;
 import com.pocketmoney.user.model.BalanceParam;
+import com.pocketmoney.user.model.InterestRateParam;
 import com.pocketmoney.user.model.User;
 
 import io.swagger.annotations.Api;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/user")
@@ -87,96 +90,25 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	// @ApiOperation(value = "사용자 등록")
-	// @PostMapping(value="/users")
-	// public ResponseEntity <String> insertUser(@RequestBody User user){
-	// int rc = 0;
-	// String msg = null;
-	//
-	// try {
-	// log.info("Start insert DB");
-	// rc = UserDao.insertUser(user);
-	// }catch(Exception e) {
-	// log.error("ERROR", e);
-	// throw new RuntimeException(e);
-	// }
-	// log.info("add user rc:"+rc);
-	//
-	// if (rc > 0) {
-	// msg = "등록 성공";
-	// }
-	//
-	// return new ResponseEntity<String> (msg,HttpStatus.OK);
-	// }
-	//
-	// @ApiOperation(value="사용자 수정")
-	// @PutMapping(value="/users/{id}")
-	// public ResponseEntity <String> updateUser(@PathVariable String id,
-	// @RequestBody User user) {
-	//
-	// int rc = 0;
-	// String msg = null;
-	//
-	// try {
-	// log.info("Start update DB");
-	// user.setid(id);
-	//
-	// rc = UserDao.updateUser(user);
-	// } catch (Exception e) {
-	// log.error("ERROR", e);
-	// throw new RuntimeException(e);
-	// }
-	// log.info("update user rc:"+rc);
-	//
-	// if (rc > 0) {
-	// msg = "수정 성공";
-	// }
-	//
-	// return new ResponseEntity<String> (msg, HttpStatus.OK);
-	// }
-	//
-	// @ApiOperation(value="사용자 삭제")
-	// @DeleteMapping(value="/users/{id}")
-	// public ResponseEntity <String>deleteUser(@PathVariable String id) {
-	//
-	// int rc = 0;
-	// String msg = null;
-	//
-	// try {
-	// log.info("Start update DB");
-	// rc = UserDao.deleteUser(id);
-	// } catch(Exception e) {
-	// log.error("ERROR", e);
-	// throw new RuntimeException(e);
-	// }
-	//
-	// log.info("delete user rc:{}", rc);
-	//
-	// if(rc > 0) {
-	// msg = "삭제 성공";
-	// }
-	//
-	// return new ResponseEntity<String> (msg, HttpStatus.OK);
-	// }
+	@ApiOperation(value = "우대금리 수정")
+	@PutMapping("/PIR")
+	public ResponseEntity<Double> updatePIR(@RequestBody InterestRateParam interestRateParam) throws Exception {
+		int res = userService.updatePIR(interestRateParam);
+		if(res == 1){
+			return new ResponseEntity<Double>(interestRateParam.getInterestRate(), HttpStatus.OK);
+		}else{
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	// @ApiOperation(value = "상품 목록 조회")
-	// @GetMapping(value = "/products")
-	// public ResponseEntity <Object>getProducts(){
-	// String uri =
-	// String.format("http://%s:%s/products",productServer,productPort);
-	// RestTemplate rest = new RestTemplate();
-	// Object products = null;
-	//
-	// try {
-	//// log.info("call Product REST API");
-	// products = rest.getForObject(uri, Object.class);
-	// }catch(Exception e) {
-	//// log.error("ERROR",e);
-	// throw new RuntimeException(e);
-	// }
-	//
-	//// log.info("success get Products");
-	//
-	// return new ResponseEntity<Object> (products,HttpStatus.OK);
-	// }
+	@ApiOperation(value = "가족금리 수정")
+	@PutMapping("/FR")
+	public ResponseEntity<Double> updateFR(@RequestBody InterestRateParam interestRateParam) throws Exception {
+		int res = userService.updateFR(interestRateParam);
+		if(res == 1){
+			return new ResponseEntity<Double>(interestRateParam.getInterestRate(), HttpStatus.OK);
+		}else{
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

@@ -17,4 +17,6 @@ public interface UserDao {
     // int selectCarer(int familyId) throws Exception;
     // List<Integer> selectChildren(int familyId) throws Exception;
     int updateBalance(BalanceParam balanceParam) throws SQLException;
+    int updatePIR(InterestRateParam interestRateParam) throws SQLException;
+    int updateFR(InterestRateParam interestRateParam) throws SQLException;
 }

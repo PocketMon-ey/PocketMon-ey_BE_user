@@ -34,13 +34,16 @@
 			from userDB.User u, userDB.Family f
 			where u.id = #{id} and u.familyId = f.familyId;
 	</select>
-    <!-- <select id="selectFamily" parameterType="int" resultType="com.pocketmoney.user.model.Family">
-        select *
-        from family
-    </select> -->
-    
 	<update id="updateBalance" parameterType="com.pocketmoney.user.model.BalanceParam">
         update userDB.User set balance=balance-#{price}
-        where id=#{id1}
+        where id=#{id1};
+    </update>
+    <update id="updatePIR" parameterType="com.pocketmoney.user.model.BalanceParam">
+        update userDB.User set preferInterestRate=#{interestRate}
+        where id=(select f.firstChildId from userDB.Family f where f.carerId = #{id});
+    </update>
+    <update id="updateFR" parameterType="com.pocketmoney.user.model.BalanceParam">
+        update userDB.Family set familyRate=#{interestRate}
+        where carerId=#{id};
     </update>
 </mapper>

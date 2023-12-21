@@ -95,7 +95,7 @@ public class UserController {
 	public ResponseEntity<Double> updatePIR(@RequestBody InterestRateParam interestRateParam) throws Exception {
 		double fr = userService.selectFR(interestRateParam.getId());
 		if (fr<interestRateParam.getInterestRate()) {
-			return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED)
+			return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
 		}
 		int res = userService.updatePIR(interestRateParam);
 		if(res == 1){

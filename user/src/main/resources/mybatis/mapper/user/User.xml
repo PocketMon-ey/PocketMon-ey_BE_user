@@ -30,9 +30,9 @@
 	</select>
     <select id="selectPIR" resultType="double">
 			select
-                preferInterestRate
-			from userDB.User
-			where id = #{id}
+                u.preferInterestRate
+			from userDB.User u, userDB.Family f
+			where u.id = f.firstChildId and (f.carerId = #{id} or f.firstChildId = #{id});
 	</select>
     <select id="selectFR" resultType="double">
 			select

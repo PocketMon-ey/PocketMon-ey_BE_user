@@ -48,6 +48,13 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "보호자 id 조회")
+	@GetMapping(value = "/carer/{id}")
+	public ResponseEntity<Integer> getCarerId(@PathVariable int id) throws Exception {
+		int carerId = userService.selectCarer(id);
+		return new ResponseEntity<Integer>(carerId, HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "우대금리 조회")
 	@GetMapping(value = "/PIR/{id}")
 	public ResponseEntity<Double> getPIR(@PathVariable int id) throws Exception {

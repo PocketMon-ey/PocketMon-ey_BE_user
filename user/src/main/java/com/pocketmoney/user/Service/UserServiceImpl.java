@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
     public int updateFR(InterestRateParam interestRateParam) throws Exception {
         return userDao.updateFR(interestRateParam);
     }
+
+    @Override
+    public int selectCarer(int id) throws Exception {
+        return userDao.selectCarer(id);
+    }
 }

@@ -12,7 +12,7 @@ public interface UserService {
     User selectUser(int userId) throws Exception;
     Double selectPIR(int id) throws Exception;
     Double selectFR(int id) throws Exception;
-
+    int selectCarer(int id) throws Exception;
     // Family selectFamily(int userId) throws Exception;
     // int selectCarer(int familyId) throws Exception;
     // List<Integer> selectChildren(int familyId) throws Exception;

@@ -22,6 +22,12 @@
                 familyId
 			from userDB.User
 	</select>
+    <select id="selectCarer" resultType="int">
+			select
+                carerId
+			from userDB.Family
+			where firstChildId = #{id}
+	</select>
     <select id="selectPIR" resultType="double">
 			select
                 preferInterestRate

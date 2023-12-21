@@ -12,7 +12,7 @@ public interface UserDao {
     User selectUser(int id) throws SQLException;
     Double selectPIR(int id) throws SQLException;
     Double selectFR(int id) throws SQLException;
-
+    int selectCarer(int id) throws SQLException;
     // Family selectFamily(int userId) throws Exception;
     // int selectCarer(int familyId) throws Exception;
     // List<Integer> selectChildren(int familyId) throws Exception;

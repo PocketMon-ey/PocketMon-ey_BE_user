@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,8 +24,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/user")
-@Api(tags = "User")
+@Api(tags = "USER")
 public class UserController {
 
 	@Autowired
@@ -40,42 +42,25 @@ public class UserController {
 
 	@ApiOperation(value = "사용자 조회")
 	@GetMapping(value = "{id}")
-	public ResponseEntity<User> getUserById(@PathVariable int id) {
+	public ResponseEntity<User> getUserById(@PathVariable int id) throws Exception {
 
-		User user = null;
-		try {
-			user = userService.selectUser(id);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
+		User user = userService.selectUser(id);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "우대금리 조회")
 	@GetMapping(value = "/PIR/{id}")
-	public ResponseEntity<Double> getPIR(@PathVariable int id) {
+	public ResponseEntity<Double> getPIR(@PathVariable int id) throws Exception {
 
-		double pir;
-		try {
-			pir = userService.selectPIR(id);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
+		double pir = userService.selectPIR(id);
 		return new ResponseEntity<Double>(pir, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "가족금리 조회")
 	@GetMapping(value = "/FR/{id}")
-	public ResponseEntity<Double> getFR(@PathVariable int id) {
+	public ResponseEntity<Double> getFR(@PathVariable int id) throws Exception {
 
-		double fr;
-		try {
-			fr = userService.selectFR(id);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		double fr  = userService.selectFR(id);
 
 		return new ResponseEntity<Double>(fr, HttpStatus.OK);
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pocketmoney.user.Service.UserService;
 import com.pocketmoney.user.model.BalanceParam;
+import com.pocketmoney.user.model.InterestRate;
 import com.pocketmoney.user.model.InterestRateParam;
 import com.pocketmoney.user.model.User;
 
@@ -70,6 +71,15 @@ public class UserController {
 		double fr  = userService.selectFR(id);
 
 		return new ResponseEntity<Double>(fr, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "우대금리, 가족금리 조회")
+	@GetMapping(value = "/IR/{id}")
+	public ResponseEntity<InterestRate> getIR(@PathVariable int id) throws Exception {
+
+		InterestRate ir  = userService.selectIR(id);
+
+		return new ResponseEntity<InterestRate>(ir, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "계좌이체")

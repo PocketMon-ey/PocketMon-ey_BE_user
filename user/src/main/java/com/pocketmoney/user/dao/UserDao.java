@@ -13,9 +13,7 @@ public interface UserDao {
     Double selectPIR(int id) throws SQLException;
     Double selectFR(int id) throws SQLException;
     int selectCarer(int id) throws SQLException;
-    // Family selectFamily(int userId) throws Exception;
-    // int selectCarer(int familyId) throws Exception;
-    // List<Integer> selectChildren(int familyId) throws Exception;
+    InterestRate selectIR(int id) throws SQLException;
     int updateBalance(BalanceParam balanceParam) throws SQLException;
     int updatePIR(InterestRateParam interestRateParam) throws SQLException;
     int updateFR(InterestRateParam interestRateParam) throws SQLException;

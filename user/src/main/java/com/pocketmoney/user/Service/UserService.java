@@ -13,9 +13,7 @@ public interface UserService {
     Double selectPIR(int id) throws Exception;
     Double selectFR(int id) throws Exception;
     int selectCarer(int id) throws Exception;
-    // Family selectFamily(int userId) throws Exception;
-    // int selectCarer(int familyId) throws Exception;
-    // List<Integer> selectChildren(int familyId) throws Exception;
+    InterestRate selectIR(int id) throws Exception;
     int updateBalance(BalanceParam balanceParam) throws Exception;
     int updatePIR(InterestRateParam interestRateParam) throws Exception;
     int updateFR(InterestRateParam interestRateParam) throws Exception;
